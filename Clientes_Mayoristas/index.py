@@ -133,7 +133,7 @@ def Agregar_Compra():
                           INSERT INTO Ordenes_Clientes(Cliente_ID,Mayoreo,Monto)
                           VALUES ({User_ID},"{Mayoreo}",{Monto})  
                            ''')
-                conn.commit()
+                
                 cursor.execute(f"SELECT Orden_ID FROM Ordenes_Clientes WHERE Cliente_ID={User_ID} ORDER BY Orden_ID DESC")
                 ORd=cursor.fetchone()
                 Orden_ID=ORd[0]
@@ -141,15 +141,14 @@ def Agregar_Compra():
                                INSERT INTO Detalles_Ordenes (Orden_ID,Producto_ID,Cantidad)
                                VALUES ({Orden_ID},1,{Dama}),({Orden_ID},2,{Caballero})
                                ''')
-            
+                conn.commit()
             
             elif Dama>0 and Caballero<=0:
                 Monto=((Dama*Precio_Dama))
                 cursor.execute(f'''
-                          INSERT INTO Ordenes_Clientes(Cliente_ID,Monto)
+                          INSERT INTO Ordenes_Clientes(Cliente_ID,Mayoreo,Monto)
                           VALUES ({User_ID},"{Mayoreo}",{Monto})  
                            ''')
-                conn.commit()
                 cursor.execute(f"SELECT Orden_ID FROM Ordenes_Clientes WHERE Cliente_ID={User_ID} ORDER BY Orden_ID DESC")
                 ORd=cursor.fetchone()
                 Orden_ID=ORd[0]
@@ -157,13 +156,13 @@ def Agregar_Compra():
                                INSERT INTO Detalles_Ordenes (Orden_ID,Producto_ID,Cantidad)
                                VALUES ({Orden_ID},1,{Dama})
                                ''')
+                conn.commit()
             elif Dama<=0 and Caballero>0:
                 Monto=(Caballero*Precio_Caballero)
                 cursor.execute(f'''
-                          INSERT INTO Ordenes_Clientes(Cliente_ID,Monto)
+                          INSERT INTO Ordenes_Clientes(Cliente_ID,Mayoreo,Monto)
                           VALUES ({User_ID},"{Mayoreo}",{Monto})  
                            ''')
-                conn.commit()
                 cursor.execute(f"SELECT Orden_ID FROM Ordenes_Clientes WHERE Cliente_ID={User_ID} ORDER BY Orden_ID DESC")
                 ORd=cursor.fetchone()
                 Orden_ID=ORd[0]
@@ -171,6 +170,7 @@ def Agregar_Compra():
                                INSERT INTO Detalles_Ordenes (Orden_ID,Producto_ID,Cantidad)
                                VALUES ({Orden_ID},2,{Caballero})
                                ''')
+                conn.commit()
                 
             else:
                 os.system("cls")
